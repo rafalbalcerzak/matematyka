@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            background-color: #2c3e50;
+        }
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            color: white;
+        }
+        
+        #kontener{
+            position: absolute;
+            margin-top: calc(50vh - 202px);
+            margin-left: calc(50% - 302px);
+            
+            border: 2px solid #3498db;
+            color: white;
+            font-family: arial;
+            font-size: 25px;
+            
+            width: 600px;
+            height: 400px;
+            text-align: center;
+        }
+        #button{
+            background-color: none;
+            border: 2px solid #3498db;
+            padding: 5px; 
+            text-align: center;
+            display: inline-block;
+            font-size: 25px;
+            color: white;
+            cursor: pointer;
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+        }
+        #button:hover {
+            background-color: #3498db;
+        }
+        #wynik{
+            font-size: 30px;
+        }
+        .zawartosc{
+            margin-top: 10px;
+            
+        }
+        input{
+            font-size: 25px;
+            text-align: center;
+            border: 2px solid #3498db;
+            background-color: rgba(0,0,0,0);
+            color: white;
+        }
+        fieldset{
+            border: none
+        }
+    </style>
+    <script>
+    function potega(){
+        var czas = parseInt(document.getElementById("czas").value);
+        var oprocetowanie = parseInt(document.getElementById("oprocetowanie").value)/100;
+        var kapital = parseInt(document.getElementById("kapital").value);
+        var kapitalizacja = 12;
+    
+        // sprawdzam jaki rodaj kapitalizacji został wybrany
+        if (document.getElementById('k1').checked) {
+         kapitalizacja = 1;
+        };
+        if (document.getElementById('k2').checked) {
+         kapitalizacja = 2;
+        };
+        if (document.getElementById('k4').checked) {
+         kapitalizacja = 4;
+        };
+        if (document.getElementById('k12').checked) {
+         kapitalizacja = 12;
+        };
+        
+        
+        
+        var b = 1;
+        var wynik = 0;
+        while( b <= czas ){
+            var wykladnik = kapitalizacja * b;
+            var podstawa =1+(oprocetowanie/kapitalizacja);
+            var potegowanie = Math.pow(podstawa, wykladnik);
+            var wynik_potegowania = kapital * potegowanie;
+            wynik += wynik_potegowania;
+            b++;
+        }
+        document.getElementById("wynik").innerHTML = wynik.toFixed(2) + "zł";
+        }
+    </script>    
+</head>
+<body>
+<div id="kontener">
+    
+    <div class="zawartosc" id="teks">Czas trwania lokaty: </div>
+    <div class="zawartosc"> <input id="czas" size="1"> lat</div>
+    
+    <div class="zawartosc" id="teks">Oprocentowanie: </div>
+    <div class="zawartosc"><input id="oprocetowanie"  size="1"> %</div>
+    
+    <div class="zawartosc" id="teks">Kapitał wpłacany co roku:</div>
+    <div class="zawartosc"><input id="kapital" size="1"> zł</div>
+    
+    <div class="zawartosc">
+        <fieldset>
+        <legend>Kapitalizacja:</legend>
+        <input type="radio" name="kapitalizacja" value="1" id="k1"><label>Roczna</label></input>
+        <input type="radio" name="kapitalizacja" value="2" id="k2"><label>Półroczna</label></input>
+        <input type="radio" name="kapitalizacja" value="4" id="k4"><label>Kwartalna</label></input>
+        <input type="radio" name="kapitalizacja" value="12" id="k12" checked><label>Miesięczna</label></input>
+        </fieldset>
+    </div>
+
+    <div id="przycisk"> <button id="button" onclick="potega()">Przelicz</button></div>
+    
+    <div class="zawartosc" id="wynik"></div>
+</div>
+
+</body>
+</html>
